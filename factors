@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+import sys
+
+# Create an empty list to store numbers
+numbers = []
+
+try:
+    # Check if there are command-line arguments
+    if len(sys.argv) > 1:
+        # Try to open the specified file
+        with open(sys.argv[1], "r") as number_file:
+            try:
+                # Read lines from the file and convert them to integers
+                numbers = [int(line) for line in number_file.readlines()]
+            except ValueError:
+                # Handle invalid numbers gracefully
+                pass
+except FileNotFoundError:
+    # Handle file not found error
+    pass
+except Exception:
+    # Handle other exceptions
+    pass
+
+# Iterate through each number in the list
+for n in numbers:
+    # Initialize p and q to 1
+    p = q = 1
+    step = n % 2 + 1
+
+    # Find factors of the number
+    while p == 1 and q < n:
+        q = q + step
+        if n % q == 0:
+            p = n // q
+
+    # Print the factors
+    print(f"{n} = {p} * {q}")
+

@@ -1,0 +1,50 @@
+#!/usr/bin/python3
+import sys
+import math
+
+# Function to check if a number is prime
+def is_prime(num):
+    if num <= 1:
+        return False
+    if num <= 3:
+        return True
+    if num % 2 == 0 or num % 3 == 0:
+        return False
+    i = 5
+    while i * i <= num:
+        if num % i == 0 or num % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+# Function to find prime factors of a number 'n'
+def find_prime_factors(n):
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0 and is_prime(i):
+            q = i
+            p = n // q
+            if is_prime(p):
+                return p, q
+    return None, None
+
+try:
+    if len(sys.argv) > 1:
+        # Open and read the file specified in the command-line argument
+        with open(sys.argv[1], "r") as nf:
+            try:
+                # Read the first line as an integer (assuming one number per file)
+                n = int(nf.readline())
+                
+                # Attempt to find prime factors of 'n'
+                p, q = find_prime_factors(n)
+                
+                # Check if prime factors were found and print the results
+                if p is not None and q is not None:
+                    print(f"p={p}, q={q}")
+                else:
+                    print("Prime factors not found.")
+            except Exception:
+                print("Invalid input.")
+except Exception:
+    print("An error occurred.")
+
